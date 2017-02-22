@@ -1,0 +1,58 @@
+name:                my-bookkeeping
+version:             0.1.0.0
+synopsis:            A sample program for `bookkeeping-jp`.
+description:         A sample program for [`bookkeeping-jp`](https://github.com/arowM/haskell-bookkeeping-jp#readme).
+homepage:            https://github.com/arowM/haskell-bookkeeping-jp-sample#readme
+license:             MIT
+license-file:        LICENSE
+author:              Kadzuya Okamoto
+maintainer:          arow.okamoto+github@gmail.com
+copyright:           2017 Kadzuya Okamoto
+category:            Business
+build-type:          Simple
+-- extra-source-files:
+cabal-version:       >=1.10
+
+library
+  hs-source-dirs:      src
+  exposed-modules:     Csv
+                     , Expenses
+                     , Sales
+  build-depends:       base >= 4.9 && < 5
+                     , bookkeeping
+                     , bookkeeping-jp
+                     , cassava
+                     , classy-prelude
+                     , unordered-containers
+                     , vector
+  default-language:    Haskell2010
+  ghc-options:         -Wall -fwarn-incomplete-uni-patterns -fwarn-incomplete-record-updates -fwarn-monomorphism-restriction
+  default-extensions:
+                       NoImplicitPrelude
+                     , OverloadedStrings
+                     , RecordWildCards
+
+executable my-bookkeeping
+  hs-source-dirs:      app
+  main-is:             Main.hs
+  ghc-options:         -threaded -rtsopts -with-rtsopts=-N
+  build-depends:       base
+                     , bookkeeping
+                     , classy-prelude
+                     , my-bookkeeping
+  default-language:    Haskell2010
+  default-extensions:
+                       NoImplicitPrelude
+
+test-suite my-bookkeeping-test
+  type:                exitcode-stdio-1.0
+  hs-source-dirs:      test
+  main-is:             Spec.hs
+  build-depends:       base
+                     , my-bookkeeping
+  ghc-options:         -threaded -rtsopts -with-rtsopts=-N
+  default-language:    Haskell2010
+
+source-repository head
+  type:     git
+  location: https://github.com/arowM/haskell-bookkeeping-jp-sample
