@@ -1,5 +1,7 @@
 # Haskell bookkeeping-jp Sample
 
+A sample usage of `bookkeeping` and `bookkeeping-jp` module of Haskell.
+
 ## Install
 
 ```
