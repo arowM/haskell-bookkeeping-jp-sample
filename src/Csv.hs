@@ -4,36 +4,34 @@ module Csv
 
 import Business.Bookkeeping
 import ClassyPrelude
-import qualified Data.Csv as Csv
-import Data.HashMap.Strict (HashMap)
-import qualified Data.HashMap.Strict as HashMap
-import qualified Data.Vector as Vector
 
-fromTransactions :: Transactions -> ByteString
+fromTransactions :: Transactions -> Text
 fromTransactions =
-  toStrict .
-  Csv.encodeByName transactionHeader . fmap transactionBody . zip [1..] . runTransactions
+  unlines . (transactionHeader:) . fmap transactionBody . zip [1..] . runTransactions
 
-transactionBody :: (Int, Transaction) -> HashMap Text Text
+transactionBody :: (Int, Transaction) -> Text
 transactionBody (n, Transaction {..}) =
-  HashMap.fromList
-    [ ("取引No", tshow n)
-    , ("取引日", pack $ formatTime defaultTimeLocale "%Y/%m/%d" tDay)
-    , ("借方勘定科目", unCategoryName . cName . unDebitCategory $ tDebit)
-    , ("貸方勘定科目", unCategoryName . cName . unCreditCategory $ tCredit)
-    , ("摘要", unDescription tDescription)
-    , ("細目", unSubDescription tSubDescription)
-    , ("貸借金額", tshow $ unAmount tAmount)
+  intercalate ","
+    [ tshow n
+    , tshow $ formatTime defaultTimeLocale "%Y/%m/%d" tDay
+    , formatText . unCategoryName . cName . unDebitCategory $ tDebit
+    , formatText . unCategoryName . cName . unCreditCategory $ tCredit
+    , formatText . unDescription $ tDescription
+    , formatText . unSubDescription $ tSubDescription
+    , tshow $ unAmount tAmount
     ]
 
-transactionHeader :: Csv.Header
+formatText :: Text -> Text
+formatText = (<> "\"") . ("\"" <>)
+
+transactionHeader :: Text
 transactionHeader =
-  Vector.fromList
-    [ encodeUtf8 "取引No"
-    , encodeUtf8 "取引日"
-    , encodeUtf8 "借方勘定科目"
-    , encodeUtf8 "貸方勘定科目"
-    , encodeUtf8 "摘要"
-    , encodeUtf8 "細目"
-    , encodeUtf8 "貸借金額"
+  intercalate ","
+    [ formatText "取引No"
+    , formatText "取引日"
+    , formatText "借方勘定科目"
+    , formatText "貸方勘定科目"
+    , formatText "摘要"
+    , formatText "細目"
+    , formatText "貸借金額"
     ]

@@ -21,10 +21,7 @@ library
   build-depends:       base >= 4.9 && < 5
                      , bookkeeping
                      , bookkeeping-jp
-                     , cassava
                      , classy-prelude
-                     , unordered-containers
-                     , vector
   default-language:    Haskell2010
   ghc-options:         -Wall -fwarn-incomplete-uni-patterns -fwarn-incomplete-record-updates -fwarn-monomorphism-restriction
   default-extensions:
