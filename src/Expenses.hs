@@ -56,9 +56,9 @@ for' = flip reduceM
 _按分家賃 :: Date -> MonthTransactions
 _按分家賃 d =
   activity d "按分家賃" $
-    _経費 "地代家賃" "50%" (Amount $ 50000 `div` 2)
+    _経費 "地代家賃" "50%" (50000 `div` 2)
 
 _按分電気代 :: Date -> Amount -> MonthTransactions
-_按分電気代 d (Amount a) =
+_按分電気代 d a =
   activity d "按分電気代" $
-    _経費 "水道光熱費" "50%" (Amount $ a `div` 2)
+    _経費 "水道光熱費" "50%" (a `div` 2)
