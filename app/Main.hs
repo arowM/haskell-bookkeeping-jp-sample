@@ -8,7 +8,7 @@ import qualified Sales
 
 main :: IO ()
 main =
-  writeFile "dist/transactions-2016.csv" $
+  writeFileUtf8 "dist/transactions-2016.csv" $
   Csv.fromTransactions $ do
     Expenses.transactions 2016
     Sales.transactions 2016

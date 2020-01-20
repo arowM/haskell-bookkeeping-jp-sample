@@ -9,8 +9,8 @@ fromTransactions :: Transactions -> Text
 fromTransactions =
   unlines . (transactionHeader:) . fmap transactionBody . zip [1..] . runTransactions
 
-transactionBody :: (Int, Transaction) -> Text
-transactionBody (n, Transaction {..}) =
+transactionBody :: (Int, Journal) -> Text
+transactionBody (n, Journal {..}) =
   intercalate ","
     [ tshow n
     , tshow $ formatTime defaultTimeLocale "%Y/%m/%d" tDay
